@@ -50,5 +50,23 @@ c(10, 20, 50, 100, 1000, 5000) %>%
 A <- matrix(rnorm(1000000), 1000, 1000)
 pdA <- t(A) %*% A
 system.time(d2 <- determinant(pdA)$modulus)
-system.time(d4 <- log_det(pdA, m = 30, n = 15))
-print(d2); print(d4)
+sm <- inverse_iter(pdA, init_lambda0 = 0)$eigenvalue
+lm <- power_iter(pdA)$eigenvalue
+system.time(
+  d4 <- log_det(pdA, m = 30, n = 15, 
+                sigma_min = sm, sigma_max = lm)
+  )
+print(d2); print(d4); 
+
+
+# Optimised with Rcpp
+A <- matrix(rnorm(9000000), 3000, 3000)
+pdA <- t(A) %*% A
+system.time(d2 <- determinant(pdA)$modulus)
+sm <- inverse_iter(pdA, init_lambda0 = 0)$eigenvalue
+lm <- power_iter(pdA)$eigenvalue
+system.time(
+  d5 <- Rcpp_log_det(pdA, m = 30, n = 15, 
+                     sigma_min = sm, sigma_max = lm)
+)
+print(d2); print(d5);
