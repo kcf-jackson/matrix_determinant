@@ -1,3 +1,6 @@
+# #Future investigation
+# #Reference: http://people.inf.ethz.ch/arbenz/ewp/Lnotes/chapter10.pdf
+#
 # arnoldi_iter <- function(A, n) {
 #   arnoldi_vectors <- rnorm(ncol(A)) %>% normalise() %>% matrix()
 #   for (j in 2:n) {
